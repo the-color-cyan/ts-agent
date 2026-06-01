@@ -1,0 +1,85 @@
+src/scripts/browser-auth.ts
+  s_131ab03b96bc2f::t_da36c20af932fe 76
+  s_88d02df071f74e::t_64f0807fa50df2 81,85-86,90-91,93,96
+  s_f4a1fad1e68a09::t_f3259925c5a5e7 3,10,16,18,72,246
+  s_131ab03b96bc2f::t_85508264546c21 26,71,79,95,114,152,159,243-245
+  s_131ab03b96bc2f::t_c7c12d200fa77d 9
+  s_47919aaf3f459c::t_b98a8e87721078 82-84,87-89,92
+  s_88d02df071f74e::t_d51d4d7718b0a1 166-167
+  s_47919aaf3f459c::t_525838d9ae2d34 224,229-234
+  s_131ab03b96bc2f::t_c707e062815316 206
+  s_47919aaf3f459c::t_8d1055b71a170e 104
+  s_88d02df071f74e::t_452e41be67e3cc 160
+  s_88d02df071f74e::t_305b8ad4224b68 1-2,4-8,11,13-15,17,19-25,27-70,73-75,77-78,80,94,97-103,105-113,115-151,153-158,161-165,168-187,189-205,207-223,225-226,228,235-242
+.gitignore
+  s_47919aaf3f459c::t_9be3924064da06 27-32
+src/cli.ts
+  s_88d02df071f74e::t_ca0130b1a0dffb 1,6
+src/codex-auth.ts
+  s_88d02df071f74e::t_5a241d1ffdf5ad 80
+  s_47919aaf3f459c::t_6ffda482f1c31d 3,97-98,113
+  s_88d02df071f74e::t_f82924efb49696 1-2,4-8,10-44,46-64,66-69,71-79,81-96,99-112,114
+src/scripts/browser-smoke.ts
+  s_88d02df071f74e::t_e87673b3e712ac 1-2,5-6,8-11,13-14,16-18,20-23,25-27,29
+  s_131ab03b96bc2f::t_7002e086bde0d4 7,24,31-33
+  s_f4a1fad1e68a09::t_a7159f0a319b47 3-4,15,30,34
+package.json
+  s_88d02df071f74e::t_0997d1fa6f9add 9
+  s_f4a1fad1e68a09::t_fa31c3f5beb0ed 6-8,10-13
+src/scripts/browser-auth-shared.ts
+  s_131ab03b96bc2f::t_d90d1e292ed369 1,8,20-32,34-35
+  s_f4a1fad1e68a09::t_121454886dc6ca 2,9-10,36-37
+  s_131ab03b96bc2f::t_851fc035c04517 18-19
+  s_88d02df071f74e::t_ed5d4c441d30e0 3-7,11-12,14,33
+  s_47919aaf3f459c::t_14c96380cc5440 13,15-17
+README.md
+  s_f4a1fad1e68a09::t_336cf00b555c7a 3,5,8-10,14,20,22,31,33,47
+  s_131ab03b96bc2f::t_990021dec5c735 25,27
+  s_f4a1fad1e68a09::t_7d6ba1de68c553 13
+  s_47919aaf3f459c::t_95f53ca9e3425b 29
+  s_131ab03b96bc2f::t_8c1f010c55384e 39
+  s_88d02df071f74e::t_23e7570948f59c 36
+  s_88d02df071f74e::t_7bc2646d36d842 4,6-7,11-12,15-17,19,21,23-24,26,32,35,37-38,40,43,46,48
+  s_47919aaf3f459c::t_efd74c64ec2b68 18
+  s_131ab03b96bc2f::t_e8df98e75212c5 28,30,34,41-42,44-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "5c6fed60afa1a65711b8973175dcda149ec1129b",
+  "prompts": {},
+  "sessions": {
+    "s_131ab03b96bc2f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019e8379-f925-7b84-8677-d5f8d67043d6",
+        "model": "gpt-5.5"
+      },
+      "human_author": "cyan <cyan@cyan.fish>"
+    },
+    "s_47919aaf3f459c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019e8390-7725-737e-8c53-b5f99851f78c",
+        "model": "gpt-5.5"
+      },
+      "human_author": "cyan <cyan@cyan.fish>"
+    },
+    "s_88d02df071f74e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019e8398-7ce9-74ef-ba35-5df54424086e",
+        "model": "gpt-5.3-codex-spark"
+      },
+      "human_author": "cyan <cyan@cyan.fish>"
+    },
+    "s_f4a1fad1e68a09": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019e8380-6375-776c-9177-13a766f23fa4",
+        "model": "gpt-5.3-codex-spark"
+      },
+      "human_author": "cyan <cyan@cyan.fish>"
+    }
+  }
+}
