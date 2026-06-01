@@ -104,3 +104,17 @@ bun --hot ./index.ts
 ```
 
 For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and PRDs are tracked in GitHub Issues for `the-color-cyan/ts-agent`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Triage labels use the default canonical vocabulary. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Domain docs use a single-context layout. See `docs/agents/domain.md`.
