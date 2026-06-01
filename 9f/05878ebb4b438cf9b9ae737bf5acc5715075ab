@@ -1,0 +1,23 @@
+docs/agents/domain.md
+  s_451da2b26e123c::t_6e86d0c41b70eb 1-39
+docs/agents/triage-labels.md
+  s_451da2b26e123c::t_846cced819c1ed 1-15
+docs/agents/issue-tracker.md
+  s_451da2b26e123c::t_208f8da96db0b8 1-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "9f05878ebb4b438cf9b9ae737bf5acc5715075ab",
+  "prompts": {},
+  "sessions": {
+    "s_451da2b26e123c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019e83c9-10ab-7726-b391-d778ad45dc2f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "cyan <cyan@cyan.fish>"
+    }
+  }
+}
