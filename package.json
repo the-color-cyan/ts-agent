@@ -1,11 +1,16 @@
 {
     "name": "ts-agent",
-    "bin": {
-        "ts-agent": "src/cli.ts"
-    },
     "module": "index.ts",
     "type": "module",
     "private": true,
+    "scripts": {
+        "typecheck": "bunx tsc --noEmit",
+        "browser:auth": "bun run src/scripts/browser-auth.ts",
+        "browser:smoke": "bun run src/scripts/browser-smoke.ts"
+    },
+    "bin": {
+        "ts-agent": "src/cli.ts"
+    },
     "devDependencies": {
         "@types/bun": "latest"
     },
