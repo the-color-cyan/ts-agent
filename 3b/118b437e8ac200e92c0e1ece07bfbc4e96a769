@@ -1,0 +1,19 @@
+AGENTS.md
+  s_451da2b26e123c::t_b4eaa29790d72c 107-120
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "3b118b437e8ac200e92c0e1ece07bfbc4e96a769",
+  "prompts": {},
+  "sessions": {
+    "s_451da2b26e123c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019e83c9-10ab-7726-b391-d778ad45dc2f",
+        "model": "gpt-5.5"
+      },
+      "human_author": "cyan <cyan@cyan.fish>"
+    }
+  }
+}
