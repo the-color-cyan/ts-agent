@@ -44,7 +44,7 @@ if (!prompt) {
 
 try {
 	const model = useCodexAuth
-		? await OpenAIModel.fromCodexAuthFile(modelName, codexAuthFile)
+		? await OpenAIModel.fromAuthFile(modelName, codexAuthFile)
 		: OpenAIModel.fromEnv(modelName);
 	const response = await model.prompt(prompt);
 

@@ -40,8 +40,7 @@ export class CodexAuth implements AuthProvider {
     static async fromFile(path: string) {
         const raw = (await Bun.file(path).json()) as CodexAuthFile &
             CodexOAuthTokens;
-        const tokens: CodexOAuthTokens =
-            raw.tokens ?? raw["openai-codex"] ?? raw;
+        const tokens: CodexOAuthTokens = raw.tokens ?? raw["openai-codex"] ?? raw;
         const accessToken = tokens.access_token ?? tokens.access;
         const accountId = tokens.account_id ?? tokens.accountId;
 
@@ -79,40 +78,31 @@ export interface ModelResponse {
     raw?: unknown;
 }
 
-export enum ResponseUrl {
+enum ResponseUrl {
     OpenAI = "https://api.openai.com/v1/responses",
     Codex = "https://chatgpt.com/backend-api/codex/responses",
 }
 
-export class OpenAIModel {
-    constructor(
-        private auth: AuthProvider,
-        private model: string,
-        private responseUrl: ResponseUrl,
-    ) {}
+export interface ModelInstance {
+    prompt(input: string): Promise<unknown>;
+}
 
-    static fromEnv(model: string) {
-        const apiKey = ApiKeyAuth.fromEnv("OPENAI_API_KEY");
-        return new OpenAIModel(apiKey, model, ResponseUrl.OpenAI);
-    }
-
-    static async fromCodexAuthFile(model: string, path: string) {
-        return new OpenAIModel(
-            await CodexAuth.fromFile(path),
-            model,
-            ResponseUrl.Codex,
-        );
+export abstract class BaseModel implements ModelInstance {
+    protected constructor(
+        protected auth: AuthProvider,
+        protected model: string,
+        protected responseUrl: ResponseUrl,
+    ) {
     }
 
     //TODO: specify unknown Promise contents
     async prompt(input: string): Promise<unknown> {
-        const headers = new Headers({ "content-type": "application/json" });
-
+        const headers = new Headers({"content-type": "application/json"});
         await this.auth.applyAuth(headers);
 
         const response = await fetch(this.responseUrl, {
             method: "POST",
-            headers: headers,
+            headers,
             body: JSON.stringify(this.buildRequestBody(input)),
         });
 
@@ -120,18 +110,33 @@ export class OpenAIModel {
 
         if (!response.ok) {
             throw new Error(
-                `OpenAI API error ${response.status} ${response.statusText}: ${text}`,
+                `Model API error ${response.status} ${response.statusText}: ${text}`,
             );
         }
 
-        if (this.responseUrl === ResponseUrl.Codex) {
-            return parseCodexSseResponse(text);
-        }
-
-        return JSON.parse(text);
+        return this.parseResponse(text);
     }
 
-    private buildRequestBody(input: string) {
+    protected abstract buildRequestBody(input: string): unknown;
+
+    protected abstract parseResponse(text: string): unknown;
+}
+
+export class OpenAIModel extends BaseModel {
+    static fromEnv(model: string): OpenAIModel {
+        const apiKey = ApiKeyAuth.fromEnv("OPENAI_API_KEY");
+        return new OpenAIModel(apiKey, model, ResponseUrl.OpenAI);
+    }
+
+    static async fromAuthFile(model: string, path: string) {
+        return new OpenAIModel(
+            await CodexAuth.fromFile(path),
+            model,
+            ResponseUrl.Codex,
+        );
+    }
+
+    protected buildRequestBody(input: string) {
         if (this.responseUrl !== ResponseUrl.Codex) {
             return { model: this.model, input };
         }
@@ -149,6 +154,42 @@ export class OpenAIModel {
             ],
             text: { verbosity: "low" },
             reasoning: { effort: "none" },
+        };
+    }
+
+    // TODO: move to Codex specific Class
+    protected parseResponse(sseText: string): ModelResponse {
+        let outputText = "";
+        let completedResponse: CodexCompletedResponse | undefined;
+
+        for (const line of sseText.split("\n")) {
+            if (!line.startsWith("data: ")) continue;
+
+            const event = JSON.parse(line.slice("data: ".length)) as CodexSseEvent;
+
+            if (event.type === "response.output_text.delta") {
+                outputText += event.delta ?? "";
+            }
+
+            if (event.type === "response.completed") {
+                completedResponse = event.response;
+            }
+        }
+
+        return {
+            text: outputText,
+            provider: "codex",
+            id: completedResponse?.id,
+            model: completedResponse?.model,
+            status: completedResponse?.status,
+            usage: completedResponse?.usage
+                ? {
+                    inputTokens: completedResponse.usage.input_tokens,
+                    outputTokens: completedResponse.usage.output_tokens,
+                    totalTokens: completedResponse.usage.total_tokens,
+                }
+                : undefined,
+            raw: completedResponse,
         };
     }
 }
@@ -170,38 +211,3 @@ type CodexSseEvent = {
     response?: CodexCompletedResponse;
 };
 
-// codex specific
-function parseCodexSseResponse(sseText: string): ModelResponse {
-    let outputText = "";
-    let completedResponse: CodexCompletedResponse | undefined;
-
-    for (const line of sseText.split("\n")) {
-        if (!line.startsWith("data: ")) continue;
-
-        const event = JSON.parse(line.slice("data: ".length)) as CodexSseEvent;
-
-        if (event.type === "response.output_text.delta") {
-            outputText += event.delta ?? "";
-        }
-
-        if (event.type === "response.completed") {
-            completedResponse = event.response;
-        }
-    }
-
-    return {
-        text: outputText,
-        provider: "codex",
-        id: completedResponse?.id,
-        model: completedResponse?.model,
-        status: completedResponse?.status,
-        usage: completedResponse?.usage
-            ? {
-                  inputTokens: completedResponse.usage.input_tokens,
-                  outputTokens: completedResponse.usage.output_tokens,
-                  totalTokens: completedResponse.usage.total_tokens,
-              }
-            : undefined,
-        raw: completedResponse,
-    };
-}
