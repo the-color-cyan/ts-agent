@@ -1,0 +1,19 @@
+.gitignore
+  s_113d261d12ad06::t_4016a4fe3550e6 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "b4478b7864d721ee5903f66da244f52c63c8b823",
+  "prompts": {},
+  "sessions": {
+    "s_113d261d12ad06": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019e8659-fd8c-7127-836e-30b930151e99",
+        "model": "gpt-5.5"
+      },
+      "human_author": "cyan <cyan@cyan.fish>"
+    }
+  }
+}
