@@ -40,7 +40,8 @@ export class CodexAuth implements AuthProvider {
     static async fromFile(path: string) {
         const raw = (await Bun.file(path).json()) as CodexAuthFile &
             CodexOAuthTokens;
-        const tokens: CodexOAuthTokens = raw.tokens ?? raw["openai-codex"] ?? raw;
+        const tokens: CodexOAuthTokens =
+            raw.tokens ?? raw["openai-codex"] ?? raw;
         const accessToken = tokens.access_token ?? tokens.access;
         const accountId = tokens.account_id ?? tokens.accountId;
 
@@ -92,12 +93,11 @@ export abstract class BaseModel implements ModelInstance {
         protected auth: AuthProvider,
         protected model: string,
         protected responseUrl: ResponseUrl,
-    ) {
-    }
+    ) {}
 
     //TODO: specify unknown Promise contents
     async prompt(input: string): Promise<unknown> {
-        const headers = new Headers({"content-type": "application/json"});
+        const headers = new Headers({ "content-type": "application/json" });
         await this.auth.applyAuth(headers);
 
         const response = await fetch(this.responseUrl, {
@@ -165,7 +165,9 @@ export class OpenAIModel extends BaseModel {
         for (const line of sseText.split("\n")) {
             if (!line.startsWith("data: ")) continue;
 
-            const event = JSON.parse(line.slice("data: ".length)) as CodexSseEvent;
+            const event = JSON.parse(
+                line.slice("data: ".length),
+            ) as CodexSseEvent;
 
             if (event.type === "response.output_text.delta") {
                 outputText += event.delta ?? "";
@@ -184,10 +186,10 @@ export class OpenAIModel extends BaseModel {
             status: completedResponse?.status,
             usage: completedResponse?.usage
                 ? {
-                    inputTokens: completedResponse.usage.input_tokens,
-                    outputTokens: completedResponse.usage.output_tokens,
-                    totalTokens: completedResponse.usage.total_tokens,
-                }
+                      inputTokens: completedResponse.usage.input_tokens,
+                      outputTokens: completedResponse.usage.output_tokens,
+                      totalTokens: completedResponse.usage.total_tokens,
+                  }
                 : undefined,
             raw: completedResponse,
         };
@@ -210,4 +212,3 @@ type CodexSseEvent = {
     delta?: string;
     response?: CodexCompletedResponse;
 };
-
