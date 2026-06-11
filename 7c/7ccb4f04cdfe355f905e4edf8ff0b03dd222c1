@@ -1,0 +1,14 @@
+src/tui.ts
+  h_441bd1542c405a 3-11,13-18,20,24,26,34,85,90
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "7c7ccb4f04cdfe355f905e4edf8ff0b03dd222c1",
+  "prompts": {},
+  "humans": {
+    "h_441bd1542c405a": {
+      "author": "cyan <cyan@cyan.fish>"
+    }
+  }
+}
